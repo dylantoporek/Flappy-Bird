@@ -39,7 +39,7 @@ useEffect(() => {
   }
   //if i dont have birdBottom as a dependecy, it wont stop
 }, [birdBottom])
-console.log(birdBottom)
+
   
 function handleFlap(){
   console.log('flap')
@@ -50,7 +50,7 @@ function handleFlap(){
 }
 
 // spacebar keycode = 32
-
+console.log(obstaclesLeft)
 document.body.onkeyup = (e) => {
   if (e.key === " " ||
       e.code ==="Space"          
@@ -62,7 +62,7 @@ document.body.onkeyup = (e) => {
   return (
     <div>
       <Bird birdBottom={birdBottom} birdLeft={birdLeft}/>
-      <Pipes />
+      <Pipes obstaclesLeft={obstaclesLeft}/>
     </div>
   );
 }

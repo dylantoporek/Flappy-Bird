@@ -1,15 +1,22 @@
 import React from "react"
+import '../components/pipes.css'
 
-function Pipes() {
+function Pipes({obstaclesLeft}) {
   return (
-    <div>
       <div className="pipe-container">
         <div className="pipes">
-          <span className="pipe-top"></span>
-          <span className="pipe-bottom"></span>
+          <div className="pipe-top" style={{
+
+          }}></div>
+          <div className="pipe-bottom" style={{
+              position: "relative",
+              left: obstaclesLeft,
+              backgroundColor: 'black',
+              width: 50,
+              height: 100,
+            }}></div>
         </div>
       </div>
-    </div>
   );
 }
 

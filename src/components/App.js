@@ -11,15 +11,25 @@ function App() {
   const [birdBottom, setBirdBottom]= useState(screenHeight / 2)
   const [obstaclesLeft, setObstaclesLeft]= useState(screenWidth)
   const [obstaclesLeftTwo, setObstaclesLeftTwo]= useState(screenWidth + screenWidth/2 + 30)
-  const [obstaclesNegHeight, setObstaclesNegHeight]= useState(0)
-  const [obstaclesNegHeightTwo, setObstaclesNegHeightTwo]= useState(0)
+  const [obstaclesNegHeight, setObstaclesNegHeight]= useState(screenHeight/2 - 50)
+  const [obstaclesNegHeightTwo, setObstaclesNegHeightTwo]= useState(screenHeight/2 - 50)
   const [isGameOver, setIsGameOver]= useState(false)
   const [score, setScore]= useState(0)
+
+
+  const [randomPipeOne, setRandomePipeOne] = useState({
+    topHeight: null,
+    bottomHeight: null,
+  })
+
+
   let gravity = 3;
   const difCheck = (difficulty === "Easy" ? gravity : gravity = 6);
   let obstacleWidth = 60
   let obstacleHeight = 300
   let gap = 200
+  let randomNum;
+  let pipeMovement
   let gameTimerId
   let obstaclesTimerId
   let obstaclesTimerIdTwo
@@ -29,17 +39,40 @@ function App() {
 //start bird falling
 useEffect(() => {
   if (birdBottom > 0) {
+    pipeMovement = setInterval(() => {
+      setObstaclesLeft(obstaclesLeft => obstaclesLeft - 5.5)
+    }, 30)
     gameTimerId = setInterval(() => {
       setBirdBottom(birdBottom => birdBottom - gravity)
     }, 30)
 
     return () => {
       clearInterval(gameTimerId)
+      clearInterval(pipeMovement)
     }
   }
   //if i dont have birdBottom as a dependecy, it wont stop
 }, [birdBottom])
 
+useEffect(() => {
+  if (obstaclesLeft < 0) {
+    randomPipe();
+    clearInterval(pipeMovement)
+    setObstaclesLeft(screenWidth)
+  }
+}, [obstaclesLeft])
+
+
+function randomPipe(){
+  let bottomPipeHeight = screenHeight*Math.random()
+  let topPipeHeight = screenHeight-bottomPipeHeight-50
+  setRandomePipeOne({
+    bottomHeight: bottomPipeHeight,
+    topHeight: topPipeHeight
+  })
+  console.log(bottomPipeHeight)
+  console.log(topPipeHeight)
+}
   
 function handleFlap(){
   console.log('flap')
@@ -48,6 +81,8 @@ function handleFlap(){
   // }) handle fluid animation
   setBirdBottom(birdBottom + 60)
 }
+
+//if(birdBottom <= 0) setIsGameOver(true);
 
 // spacebar keycode = 32
 console.log(obstaclesLeft)
@@ -62,7 +97,7 @@ document.body.onkeyup = (e) => {
   return (
     <div>
       <Bird birdBottom={birdBottom} birdLeft={birdLeft}/>
-      <Pipes obstaclesLeft={obstaclesLeft}/>
+      <Pipes isGameOver={isGameOver} obstaclesLeft={obstaclesLeft} screenHeight={screenHeight} randomPipeOne={randomPipeOne}/>
     </div>
   );
 }

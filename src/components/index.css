@@ -1,7 +1,6 @@
 .bird {
   background: brown;
   border-radius: 45%;
-  position: fixed;
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;

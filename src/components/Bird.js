@@ -1,17 +1,19 @@
 import React from "react"
 
-
-function Bird({bird, setBird, ani}) {
+const Bird = ({birdBottom, birdLeft}) => {
+  const birdWidth = 50
+  const birdHeight = 60
 
   return (
-    <div className="bird" style={{
-        animation: ani ? "jump 1s forwards" : "fall 5s forwards",
-        top: bird,
-
-    }}>
-      
-    </div>
-  );
+      <div id='bird' style={{
+          position: 'absolute',
+          backgroundColor: 'blue',
+          width: birdWidth,
+          height: birdHeight,
+          left: birdLeft - (birdWidth/2),
+          bottom: birdBottom - (birdHeight/2),
+      }}></div>
+  )
 }
 
-export default Bird;
+export default Bird

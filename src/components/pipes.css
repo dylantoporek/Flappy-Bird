@@ -1,0 +1,15 @@
+.pipe-container{
+    margin: auto;
+    position: sticky;
+    color: black;
+}
+
+.pipes{
+    
+}
+
+.pipe-top{
+    color: green;
+    height: 100%;
+    width: 100%;
+}

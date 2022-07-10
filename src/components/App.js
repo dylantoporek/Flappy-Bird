@@ -9,7 +9,7 @@ function App() {
   const birdLeft = screenWidth / 2
   const [difficulty, setDifficulty] = useState("Easy")
   const [birdBottom, setBirdBottom]= useState(screenHeight / 2)
-  const [obstaclesLeft, setObstaclesLeft]= useState(screenWidth)
+  const [obstaclesLeft, setObstaclesLeft]= useState(-50)
   const [obstaclesLeftTwo, setObstaclesLeftTwo]= useState(screenWidth + screenWidth/2 + 30)
   const [obstaclesNegHeight, setObstaclesNegHeight]= useState(screenHeight/2 - 50)
   const [obstaclesNegHeightTwo, setObstaclesNegHeightTwo]= useState(screenHeight/2 - 50)
@@ -55,7 +55,7 @@ useEffect(() => {
 }, [birdBottom])
 
 useEffect(() => {
-  if (obstaclesLeft < 0) {
+  if (obstaclesLeft < -50) {
     randomPipe();
     clearInterval(pipeMovement)
     setObstaclesLeft(screenWidth)
@@ -85,7 +85,8 @@ function handleFlap(){
 //if(birdBottom <= 0) setIsGameOver(true);
 
 // spacebar keycode = 32
-console.log(obstaclesLeft)
+console.log('obstacleLeft', obstaclesLeft)
+console.log('birdBottom', birdBottom)
 document.body.onkeyup = (e) => {
   if (e.key === " " ||
       e.code ==="Space"          
@@ -95,7 +96,14 @@ document.body.onkeyup = (e) => {
 }
 
   return (
-    <div>
+    <div style={{
+      position: "fixed",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+
+    }}>
       <Bird birdBottom={birdBottom} birdLeft={birdLeft}/>
       <Pipes isGameOver={isGameOver} obstaclesLeft={obstaclesLeft} screenHeight={screenHeight} randomPipeOne={randomPipeOne}/>
     </div>

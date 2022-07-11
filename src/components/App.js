@@ -71,8 +71,9 @@ useEffect(() => {
   }
 }, [obstaclesLeft])
 
+// Collision checks
 useEffect(()=>{
- if (birdBottom < 0){
+ if (birdBottom <= 0 || birdBottom >= 722){
    gameOver()
  } 
 })

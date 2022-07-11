@@ -15,8 +15,6 @@ function App() {
   const [obstaclesNegHeightTwo, setObstaclesNegHeightTwo]= useState(screenHeight/2 - 50)
   const [isGameOver, setIsGameOver]= useState(false)
   const [score, setScore]= useState(0)
-
-
   const [randomPipeOne, setRandomePipeOne] = useState({
     topHeight: null,
     bottomHeight: null,
@@ -33,6 +31,8 @@ function App() {
   let gameTimerId
   let obstaclesTimerId
   let obstaclesTimerIdTwo
+
+  // console.log(screenHeight)
 
   // difficulty variety (changing speed/gravity)
   
@@ -54,6 +54,7 @@ useEffect(() => {
   //if i dont have birdBottom as a dependecy, it wont stop
 }, [birdBottom])
 
+// Resets Fist Obstacle when it goes off screen & calls randomPipe to generate random numbers for next obstacle
 useEffect(() => {
   if (obstaclesLeft < -50) {
     randomPipe();
@@ -62,10 +63,24 @@ useEffect(() => {
   }
 }, [obstaclesLeft])
 
-
+// Gerates random top and bottom pipe heights for obstacles
 function randomPipe(){
   let bottomPipeHeight = screenHeight*Math.random()
-  let topPipeHeight = screenHeight-bottomPipeHeight-50
+  let topPipeHeight = screenHeight-bottomPipeHeight
+
+  // checking the topPipeHeight is not too tall
+  if (topPipeHeight > 600){
+    console.log('top pipe too tall')
+    topPipeHeight = topPipeHeight - 120
+  }
+
+  //checking the bottomPipeHeight is not too tall 
+  if (bottomPipeHeight > 650){
+    console.log('bottom pipe too tall')
+    bottomPipeHeight = bottomPipeHeight - 75
+  }
+
+  // setting the values into state
   setRandomePipeOne({
     bottomHeight: bottomPipeHeight,
     topHeight: topPipeHeight
@@ -73,20 +88,24 @@ function randomPipe(){
   console.log(bottomPipeHeight)
   console.log(topPipeHeight)
 }
-  
+ 
+// flap functionality on spacebar press
 function handleFlap(){
   console.log('flap')
-  // oppTimer = setInterval(() => {
-  //   setBirdBottom(birdBottom => birdBottom + 60)
-  // }) handle fluid animation
   setBirdBottom(birdBottom + 60)
 }
 
-//if(birdBottom <= 0) setIsGameOver(true);
-
+//   oppTimer = setInterval(() => {
+//     setBirdBottom(birdBottom => birdBottom + 60)
+//   }) handle fluid animation
+// 
+// if(birdBottom <= 0) setIsGameOver(true);
+// 
 // spacebar keycode = 32
-console.log('obstacleLeft', obstaclesLeft)
-console.log('birdBottom', birdBottom)
+
+// console.log('birdBottom', birdBottom)
+
+// check if spacebar was pressed to initalize handleFlap
 document.body.onkeyup = (e) => {
   if (e.key === " " ||
       e.code ==="Space"          

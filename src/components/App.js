@@ -31,6 +31,7 @@ function App() {
   let gameTimerId
   let obstaclesTimerId
   let obstaclesTimerIdTwo
+  let birdMovement
 
 
   // console.log(screenHeight)
@@ -40,29 +41,41 @@ function App() {
 //start bird falling
 useEffect(() => {
   if (birdBottom > 0) {
-    pipeMovement = setInterval(() => {
-      setObstaclesLeft(obstaclesLeft => obstaclesLeft - 5.5)
-    }, 30)
-    gameTimerId = setInterval(() => {
+    birdMovement = setInterval(() => {
       setBirdBottom(birdBottom => birdBottom - gravity)
-    }, 30)
+    },30)
 
     return () => {
-      clearInterval(gameTimerId)
-      clearInterval(pipeMovement)
+      clearInterval(birdMovement)
     }
   }
-  //if i dont have birdBottom as a dependecy, it wont stop
+
 }, [birdBottom])
+
+
 
 // Resets Fist Obstacle when it goes off screen & calls randomPipe to generate random numbers for next obstacle
 useEffect(() => {
-  if (obstaclesLeft < -50) {
+  if (obstaclesLeft > -50) {
+    pipeMovement = setInterval(() => {
+      setObstaclesLeft(obstaclesLeft => obstaclesLeft - 5.5)
+    }, 30)
+    
+    return () => {
+      clearInterval(pipeMovement)
+    }
+
+  } else {
     randomPipe();
-    clearInterval(pipeMovement)
     setObstaclesLeft(screenWidth)
   }
 }, [obstaclesLeft])
+
+useEffect(()=>{
+ if (birdBottom < 0){
+   gameOver()
+ } 
+})
 
 // Gerates random top and bottom pipe heights for obstacles
 function randomPipe(){
@@ -102,25 +115,27 @@ function handleFlap(){
 // 
 // if(birdBottom <= 0) setIsGameOver(true);
 
-// if (birdBottom <= 0){
-//   collisionCheck()
-// }
 
-// function collisionCheck(){
-//   if (birdBottom <= 0){
-//     setIsGameOver(true)
-//   }
-// }
+
+function gameOver(){
+  clearInterval(birdMovement)
+  clearInterval(pipeMovement)
+  setIsGameOver((isGameOver) => true)  
+}
+  
+
+console.log(score)
+
 
 // function addScore(){
 
 // }
 
-//  let gameOverDisplay = <div>
-//     <h2>You Lose</h2>
-//     <p>Score: {score}</p>
-//     <button>Play again?</button>
-//   </div>
+ let gameOverDisplay = <div>
+    <h2>You Lose</h2>
+    <p>Score: {score}</p>
+    <button>Play again?</button>
+  </div>
 
 
  
@@ -137,17 +152,21 @@ document.body.onkeyup = (e) => {
   }
 }
 
-
 return (
     <div style={{
       position: "fixed",
+      display: 'flex',
       top: 0,
       bottom: 0,
       left: 0,
       right: 0,
       }}>
+        <div id='game-over-display'>
+          {isGameOver ? gameOverDisplay : null}
+        </div>
       <Bird birdBottom={birdBottom} birdLeft={birdLeft}/>
-      <Pipes isGameOver={isGameOver} obstaclesLeft={obstaclesLeft} screenHeight={screenHeight} randomPipeOne={randomPipeOne}/>
+      <Pipes obstaclesLeft={obstaclesLeft} screenHeight={screenHeight} randomPipeOne={randomPipeOne}/>
+     
     </div>
   );
 }

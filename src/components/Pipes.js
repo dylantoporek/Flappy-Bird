@@ -1,12 +1,12 @@
 import React, { useEffect } from "react"
 import '../components/pipes.css'
 
-function Pipes({obstaclesLeft, screenHeight, isGameOver, randomPipeOne}) {
+function Pipes({obstaclesLeft, screenHeight, randomPipeOne}) {
 
 
   const {topHeight, bottomHeight} = randomPipeOne
-  console.log("topHeight", topHeight)
-  console.log('bottomHeight', bottomHeight)
+  // console.log("topHeight", topHeight)
+  // console.log('bottomHeight', bottomHeight)
 
   let randomPipe1Display;
   if(randomPipeOne !== null){

@@ -23,3 +23,15 @@
     transform: translateY(100px)
   }
 }
+
+#game-over-display{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  top: 5%;
+
+
+}

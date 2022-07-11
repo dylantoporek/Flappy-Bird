@@ -32,6 +32,7 @@ function App() {
   let obstaclesTimerId
   let obstaclesTimerIdTwo
 
+
   // console.log(screenHeight)
 
   // difficulty variety (changing speed/gravity)
@@ -100,7 +101,29 @@ function handleFlap(){
 //   }) handle fluid animation
 // 
 // if(birdBottom <= 0) setIsGameOver(true);
-// 
+
+// if (birdBottom <= 0){
+//   collisionCheck()
+// }
+
+// function collisionCheck(){
+//   if (birdBottom <= 0){
+//     setIsGameOver(true)
+//   }
+// }
+
+// function addScore(){
+
+// }
+
+//  let gameOverDisplay = <div>
+//     <h2>You Lose</h2>
+//     <p>Score: {score}</p>
+//     <button>Play again?</button>
+//   </div>
+
+
+ 
 // spacebar keycode = 32
 
 // console.log('birdBottom', birdBottom)
@@ -114,15 +137,15 @@ document.body.onkeyup = (e) => {
   }
 }
 
-  return (
+
+return (
     <div style={{
       position: "fixed",
       top: 0,
       bottom: 0,
       left: 0,
       right: 0,
-
-    }}>
+      }}>
       <Bird birdBottom={birdBottom} birdLeft={birdLeft}/>
       <Pipes isGameOver={isGameOver} obstaclesLeft={obstaclesLeft} screenHeight={screenHeight} randomPipeOne={randomPipeOne}/>
     </div>
